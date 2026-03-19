@@ -1,773 +1,243 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <script src="https://kit.fontawesome.com/a14ae32021.js" crossorigin="anonymous"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>18 June · butterfly Winnie</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18 June · butterfly Winnie</title>
 
-    <style type="text/css">
-        @font-face {
-            font-family: digit;
-            src: url('digital-7_mono.ttf') format("truetype");
-        }
+<style>
+body {
+    background: linear-gradient(145deg, #fff3f7, #ffeef4);
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    overflow-x: hidden;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+/* BUTTERFLIES */
+.butterfly {
+    position: fixed;
+    font-size: 20px;
+    animation: float 10s linear infinite;
+    opacity: 0.7;
+    z-index: 1;
+}
 
-        body {
-            background: linear-gradient(145deg, #fff3f7 0%, #ffeef4 100%);
-            font-family: 'Courier New', monospace;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            position: relative;
-            overflow-x: hidden;
-        }
+@keyframes float {
+    0% { transform: translateY(100vh) translateX(0); }
+    100% { transform: translateY(-10vh) translateX(50px); }
+}
 
-        .butterfly-minimal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+#code {
+    background: rgba(255,245,250,0.95);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 500px;
+    position: relative;
+    z-index: 10;
+}
 
-        .mini-butterfly {
-            position: absolute;
-            color: #f7b8d4;
-            font-size: 20px;
-            opacity: 0.2;
-            animation: floatSoft 18s infinite ease-in-out;
-        }
+.typewriter {
+    white-space: pre-wrap;
+}
 
-        @keyframes floatSoft {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.2; }
-            25% { transform: translate(15px, -10px) rotate(5deg); opacity: 0.3; }
-            50% { transform: translate(30px, 10px) rotate(-3deg); opacity: 0.2; }
-            75% { transform: translate(15px, 25px) rotate(4deg); opacity: 0.3; }
-        }
+button {
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
-        #mainDiv {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+.yes-btn { background:#ff99bb; color:white; }
+.no-btn { background:#ffe4f0; }
 
-        #content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-        }
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff99bb;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+}
 
-        /* Love Letter */
-        #code {
-            width: 100%;
-            background: rgba(255, 245, 250, 0.95);
-            backdrop-filter: blur(4px);
-            border-radius: 24px;
-            padding: 20px;
-            border: 2px solid #ffd5e2;
-            font-size: 14px;
-            line-height: 1.6;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            box-shadow: 0 5px 20px rgba(255,150,200,0.2);
-        }
-
-        /* Heart */
-        #loveHeart {
-            width: 100%;
-            position: relative;
-            aspect-ratio: 1/1.2;
-            margin: 0 auto;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s;
-            background: #ffd5e2;
-            border-radius: 24px;
-            overflow: hidden;
-        }
-
-        #loveHeart.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Fallback heart animation */
-        .heart-fallback {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ffb6c1, #ffc0cb);
-            position: relative;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
-        .heart-fallback::before,
-        .heart-fallback::after {
-            content: '❤️';
-            position: absolute;
-            font-size: 60px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: heartBeat 1.5s infinite;
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.2); }
-        }
-
-        canvas {
-            width: 100% !important;
-            height: 100% !important;
-            display: block;
-        }
-
-        #words {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 25;
-            padding: 0 8px;
-            pointer-events: none;
-        }
-
-        #messages {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(2px);
-            border-radius: 30px;
-            padding: 6px 12px;
-            display: inline-block;
-            margin-bottom: 6px;
-            font-size: 13px;
-            color: #b34b6b;
-            max-width: 95%;
-        }
-
-        #elapseClock {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 3px;
-        }
-
-        #loveu {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(4px);
-            border-radius: 25px;
-            padding: 12px 15px;
-            border: 2px solid #ffbfd4;
-            display: inline-block;
-            max-width: 98%;
-            pointer-events: auto;
-            width: auto;
-            min-width: 200px;
-        }
-
-        .name-line {
-            font-size: 18px;
-            color: #ac4e74;
-            font-weight: 600;
-            margin-bottom: 8px;
-            white-space: normal;
-            word-wrap: break-word;
-        }
-
-        .proposal-container {
-            margin: 8px 0;
-        }
-
-        .proposal-question {
-            font-size: 20px;
-            font-weight: bold;
-            color: #c42765;
-            margin-bottom: 12px;
-            line-height: 1.3;
-            word-wrap: break-word;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            min-height: 50px;
-        }
-
-        .yes-btn, .no-btn {
-            padding: 10px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 40px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255,120,160,0.3);
-            min-width: 90px;
-            -webkit-tap-highlight-color: transparent;
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-        }
-
-        .yes-btn {
-            background: #ff99bb;
-            color: white;
-            border: 2px solid #ff4d7a;
-        }
-
-        .yes-btn:active {
-            transform: scale(0.95);
-        }
-
-        .no-btn {
-            background: #ffe4f0;
-            color: #b34e71;
-            border: 2px solid #ffb3c6;
-            position: relative;
-        }
-
-        .signature {
-            font-size: 16px;
-            color: #b34e71;
-            margin-top: 10px;
-        }
-
-        #heartspan {
-            display: inline-block;
-            margin-top: 12px;
-            cursor: pointer;
-        }
-
-        #heartspan i {
-            color: #ff4d7a;
-            font-size: 36px;
-            filter: drop-shadow(0 0 5px #ffa5c0);
-            transition: transform 0.2s ease;
-        }
-
-        #heartspan i:active {
-            transform: scale(1.2);
-        }
-
-        /* Scroll indicator */
-        .scroll-hint {
-            text-align: center;
-            color: #b34b6b;
-            font-size: 13px;
-            margin-top: 12px;
-            animation: bounce 1.5s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(3px); }
-        }
-
-        /* Celebration styles */
-        .celebration-butterfly {
-            position: fixed;
-            color: #ffb3d1;
-            font-size: 24px;
-            filter: drop-shadow(0 0 5px #ff69b4);
-            animation: celebrateFloat 3s ease-out forwards;
-            z-index: 10000;
-            pointer-events: none;
-        }
-
-        @keyframes celebrateFloat {
-            0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) scale(1.2); opacity: 0; }
-        }
-
-        .forever-text {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 32px;
-            font-weight: bold;
-            color: #ff3388;
-            text-shadow: 0 0 20px #ffb3d9;
-            z-index: 10001;
-            animation: glowPulse 2s infinite;
-            background: rgba(255,240,245,0.9);
-            padding: 15px 25px;
-            border-radius: 60px;
-            border: 3px solid white;
-            backdrop-filter: blur(5px);
-            text-align: center;
-            white-space: normal;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.05); }
-        }
-
-        /* Final question styles */
-        .final-question-container {
-            position: fixed;
-            bottom: 20px;
-            left: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 18px 15px;
-            border: 3px solid #ff99bb;
-            text-align: center;
-            animation: slideUp 0.5s ease;
-            z-index: 10002;
-            box-shadow: 0 10px 30px rgba(255,80,130,0.3);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .final-question {
-            font-size: 22px;
-            font-weight: bold;
-            color: #c42765;
-            margin-bottom: 15px;
-            line-height: 1.3;
-            word-wrap: break-word;
-        }
-
-        .final-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .final-yes, .final-no {
-            padding: 12px 30px;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 110px;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .final-yes {
-            background: #ff99bb;
-            color: white;
-            border: 2px solid #ff4d7a;
-        }
-
-        .final-yes:active {
-            transform: scale(0.95);
-            background: #ff80aa;
-        }
-
-        .final-no {
-            background: #ffe4f0;
-            color: #b34e71;
-            border: 2px solid #ffb3c6;
-        }
-
-        .final-no:active {
-            background: #ffd5e2;
-            transform: scale(0.95);
-        }
-
-        .whatsapp-message {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #25D366;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: bold;
-            z-index: 10003;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            white-space: nowrap;
-            max-width: 90%;
-            text-align: center;
-        }
-
-        /* Continue button */
-        #continueBtn {
-            background: #ff99bb;
-            color: white;
-            border: none;
-            border-radius: 40px;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 12px rgba(255,120,160,0.4);
-            transition: all 0.2s ease;
-            display: inline-block;
-            width: 100%;
-            max-width: 250px;
-            touch-action: manipulation;
-        }
-
-        #continueBtn:active {
-            transform: scale(0.95);
-            background: #ff80aa;
-        }
-
-        .comments {
-            color: #ac7088;
-        }
-
-        .space {
-            margin-left: 15px;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        /* Extra small screens */
-        @media (max-width: 380px) {
-            #code {
-                padding: 15px;
-                font-size: 13px;
-            }
-            
-            .proposal-question {
-                font-size: 18px;
-            }
-            
-            .yes-btn, .no-btn {
-                padding: 8px 20px;
-                font-size: 16px;
-                min-width: 80px;
-            }
-            
-            .name-line {
-                font-size: 16px;
-            }
-            
-            .final-question {
-                font-size: 20px;
-            }
-            
-            .final-yes, .final-no {
-                padding: 10px 20px;
-                font-size: 18px;
-                min-width: 90px;
-            }
-        }
-    </style>
+</style>
 </head>
 
 <body>
-    <div class="butterfly-minimal">
-        <div class="mini-butterfly" style="top: 10%; left: 5%;">🦋</div>
-        <div class="mini-butterfly" style="top: 70%; left: 90%; animation-delay: 2s;">🦋</div>
-        <div class="mini-butterfly" style="top: 30%; left: 50%; animation-delay: 4s;">🦋</div>
-        <div class="mini-butterfly" style="top: 80%; left: 15%; animation-delay: 1s;">🦋</div>
-        <div class="mini-butterfly" style="top: 20%; left: 80%; animation-delay: 3s;">🦋</div>
-    </div>
 
-    <div id="mainDiv">
-        <div id="content">
-            <!-- Love Letter -->
-            <div id="code">
-                <span class="comments">/**</span><br />
-                <span class="space"></span><span class="comments">*  the day i met you — 18 june  🦋</span><br />
-                <span class="space"></span><span class="comments">*/</span><br />
-                <span style="color:#aa4d6e;">hey Vimbai (my butterfly Winnie) . . .</span><br />
-                <span class="comments">// this day last year — 18th june.</span><br />
-                that's when i met you, and started to fall in love officially.<br />
-                <span class="comments">// just me and you, butterfly.</span><br />
-                do you remember? the ET‑LAB, that friday.<br />
-                since that day a spark began;<br />
-                <span class="comments">// your face, your voice, your words — all imprinted in me.</span><br />
-                as the time went on, the bond grew stronger.<br />
-                journey from infatuation to love, from "hi" to "forever".<br />
-                we've shared so many moments — 9 beautiful months of you.<br />
-                there have been fights,<br />
-                <span class="comments">// and i'm sure there will be more.</span><br />
-                but our bond will always grow back stronger.<br />
-                <span class="comments">// because you are my butterfly, and i am yours.</span><br />
-                <br />
-                all i want to say is:<br />
-                <span style="color:#b13e68;">"baby, i will love you forever — Vimbai."</span><br />
-                <br />
-                
-                <!-- Scroll hint -->
-                <div class="scroll-hint" id="scrollHint">👇 scroll down 👇</div>
-                
-                <!-- Continue button -->
-                <div style="text-align: center;">
-                    <button id="continueBtn">💖 continue to heart 💖</button>
-                </div>
-            </div>
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-            <!-- Heart + Proposal -->
-            <div id="loveHeart">
-                <div id="fallbackHeart" class="heart-fallback"></div>
-                <div id="words">
-                    <div id="messages">
-                        <span>18 june · 9 months of you</span>
-                        <div id="elapseClock">0 days 0 hours 0 minutes 0 seconds</div>
-                    </div>
-                    <div id="loveu">
-                        <div class="name-line">eng lui, baba vematwins</div>
-                        
-                        <div class="proposal-container" id="proposalContainer">
-                            <div class="proposal-question">💍 will you marry me? 💍</div>
-                            <div class="button-group">
-                                <button class="yes-btn" id="yesBtn">YES</button>
-                                <button class="no-btn" id="noBtn">NO</button>
-                            </div>
-                        </div>
-                        
-                        <div class="signature">- me (your lui)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
 
-    <!-- Container for final question -->
-    <div id="finalQuestionContainer" style="display: none;"></div>
+<div id="code">
 
-    <script type="text/javascript">
-        // Get elements
-        const loveHeart = document.getElementById('loveHeart');
-        const continueBtn = document.getElementById('continueBtn');
-        const scrollHint = document.getElementById('scrollHint');
-        const finalContainer = document.getElementById('finalQuestionContainer');
-        const elapseClock = document.getElementById('elapseClock');
-        
-        // Date: 18th June last year
-        const startDate = new Date();
-        const currentYear = new Date().getFullYear();
-        const together = new Date(currentYear - 1, 5, 18); // June 18th last year
-        together.setHours(0, 0, 0, 0);
+<div id="typewriter-text" class="typewriter">
+/**
+ * the day i met you — 18 june 🦋
+ */
 
-        // Update time elapsed
-        function updateTimeElapsed() {
-            const now = new Date();
-            const diff = now - together;
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            elapseClock.innerHTML = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+hey Vimbai (my butterfly Winnie) . . .
+
+// this day last year — 18th june.
+that's when i met you, and started to fall in love officially.
+
+// just me and you, butterfly.
+do you remember? Those countless nights of consistency kuChipindura......
+
+since that day a spark began;
+
+// your face, your voice, your words — all imprinted in me.
+
+as the time went on, the bond grew stronger.
+
+journey from infatuation to love, from "hi" to "forever".
+
+we've shared so many moments — 9 beautiful months of you.
+
+there have been fights,
+// and i'm sure there will be more.
+
+but our bond will always grow back stronger.
+
+// because you are my butterfly, and i am yours.
+
+all i want to say is:
+
+"baby, i will love you forever — Vimbai."
+</div>
+
+<br>
+
+<button onclick="showHeart()">💖 continue to heart 💖</button>
+
+<div id="heartSection" style="display:none; text-align:center; margin-top:20px;">
+    <h3>💍 will you marry me? 💍</h3>
+    <button class="yes-btn" id="yesBtn">YES</button>
+    <button class="no-btn" id="noBtn">NO</button>
+</div>
+
+</div>
+
+<script>
+
+// 🦋 CREATE FLOATING BUTTERFLIES
+function createButterfly() {
+    const b = document.createElement("div");
+    b.className = "butterfly";
+    b.innerHTML = "🦋";
+
+    b.style.left = Math.random() * window.innerWidth + "px";
+    b.style.animationDuration = (8 + Math.random() * 5) + "s";
+
+    document.body.appendChild(b);
+
+    setTimeout(() => b.remove(), 12000);
+}
+
+// continuous butterflies
+setInterval(createButterfly, 800);
+
+
+// 🦋 CLICK BURST
+document.addEventListener("click", function(e) {
+    for (let i = 0; i < 5; i++) {
+        const b = document.createElement("div");
+        b.innerHTML = "🦋";
+        b.style.position = "fixed";
+        b.style.left = e.clientX + "px";
+        b.style.top = e.clientY + "px";
+        b.style.fontSize = "20px";
+        b.style.transition = "all 1s ease-out";
+        document.body.appendChild(b);
+
+        setTimeout(() => {
+            b.style.transform = `translate(${Math.random()*100-50}px, -80px)`;
+            b.style.opacity = 0;
+        }, 50);
+
+        setTimeout(() => b.remove(), 1000);
+    }
+});
+
+
+// 🎵 MUSIC CONTROL
+const music = document.getElementById("bgMusic");
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+    } else {
+        music.pause();
+    }
+}
+
+// try autoplay (some browsers block it)
+window.addEventListener("click", () => {
+    music.play().catch(() => {});
+}, { once: true });
+
+
+// ⌨️ TYPEWRITER
+function startTypewriter() {
+    const el = document.getElementById("typewriter-text");
+    const text = el.innerText;
+    el.innerHTML = "";
+
+    let i = 0;
+
+    function type() {
+        if (i < text.length) {
+            el.innerHTML += text[i] === "\n" ? "<br/>" : text[i];
+            i++;
+            setTimeout(type, 25);
         }
+    }
 
-        // Continue button click
-        continueBtn.addEventListener('click', function() {
-            loveHeart.classList.add('visible');
-            
-            // Smooth scroll
-            loveHeart.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Start time updates
-            updateTimeElapsed();
-            setInterval(updateTimeElapsed, 1000);
-            
-            // Hide button and hint
-            continueBtn.style.display = 'none';
-            scrollHint.style.display = 'none';
-        });
+    type();
+}
 
-        // Heart click reaction
-        document.getElementById('heartspan').addEventListener('click', function(e) {
-            e.preventDefault();
-            let b = document.createElement('div');
-            b.innerHTML = '🦋';
-            b.style.position = 'fixed';
-            b.style.left = (e.clientX - 10) + 'px';
-            b.style.top = (e.clientY - 20) + 'px';
-            b.style.fontSize = '24px';
-            b.style.color = '#f9a8c8';
-            b.style.pointerEvents = 'none';
-            b.style.zIndex = 9999;
-            b.style.transition = 'all 1.5s ease-out';
-            b.style.opacity = 0.8;
-            document.body.appendChild(b);
-            setTimeout(() => {
-                b.style.transform = `translate(${20}px, ${-60}px) rotate(10deg)`;
-                b.style.opacity = 0;
-            }, 20);
-            setTimeout(() => b.remove(), 1500);
-        });
+window.onload = startTypewriter;
 
-        // Proposal magic
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const proposalContainer = document.getElementById('proposalContainer');
 
-        function moveNoButton() {
-            const x = (Math.random() * 60 - 30);
-            const y = (Math.random() * 40 - 20);
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-        }
+// 💖 SHOW HEART
+function showHeart() {
+    document.getElementById("heartSection").style.display = "block";
+}
 
-        function showPlayfulMessage() {
-            const messages = [
-                "😜 nice try!", "🦋 can't say no!", "💖 not allowed!",
-                "✨ try again!", "🥺 please?", "💘 nope!"
-            ];
-            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-            
-            const floatMsg = document.createElement('div');
-            floatMsg.innerHTML = randomMsg;
-            floatMsg.style.position = 'fixed';
-            floatMsg.style.left = '50%';
-            floatMsg.style.top = '40%';
-            floatMsg.style.transform = 'translateX(-50%)';
-            floatMsg.style.backgroundColor = '#ffdfed';
-            floatMsg.style.padding = '8px 16px';
-            floatMsg.style.borderRadius = '30px';
-            floatMsg.style.border = '2px solid #ff99bb';
-            floatMsg.style.color = '#b32d5e';
-            floatMsg.style.fontWeight = 'bold';
-            floatMsg.style.fontSize = '14px';
-            floatMsg.style.zIndex = '10001';
-            floatMsg.style.transition = 'all 1s ease-out';
-            document.body.appendChild(floatMsg);
-            
-            setTimeout(() => {
-                floatMsg.style.transform = 'translateX(-50%) translateY(-30px)';
-                floatMsg.style.opacity = '0';
-            }, 50);
-            setTimeout(() => floatMsg.remove(), 1000);
-        }
 
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            moveNoButton();
-            showPlayfulMessage();
-        });
+// 😈 NO BUTTON RUNS
+const noBtn = document.getElementById("noBtn");
 
-        noBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            moveNoButton();
-            showPlayfulMessage();
-        });
+function moveNoButton() {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 100 - 50;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
 
-        // Function to show final question
-        function showFinalQuestion() {
-            finalContainer.style.display = 'block';
-            finalContainer.innerHTML = `
-                <div class="final-question-container">
-                    <div class="final-question">💕 will i forever be yours? 💕</div>
-                    <div class="final-buttons">
-                        <button class="final-yes" id="finalYesBtn">YES</button>
-                        <button class="final-no" id="finalNoBtn">NO</button>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('finalYesBtn').addEventListener('click', function() {
-                const phoneNumber = '073796498';
-                const message = encodeURIComponent("💖 YES! i will be yours forever, eng lui! 💖");
-                window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-                
-                const successMsg = document.createElement('div');
-                successMsg.className = 'whatsapp-message';
-                successMsg.innerHTML = '💌 Message sent! 💌';
-                document.body.appendChild(successMsg);
-                setTimeout(() => successMsg.remove(), 2000);
-                
-                document.getElementById('finalYesBtn').disabled = true;
-                document.getElementById('finalNoBtn').disabled = true;
-            });
-            
-            document.getElementById('finalNoBtn').addEventListener('click', function() {
-                const playfulNo = document.createElement('div');
-                playfulNo.className = 'whatsapp-message';
-                playfulNo.style.background = '#ff99bb';
-                playfulNo.innerHTML = '😜 click YES instead! 😜';
-                document.body.appendChild(playfulNo);
-                setTimeout(() => playfulNo.remove(), 1500);
-                
-                const noBtn = document.getElementById('finalNoBtn');
-                noBtn.style.transform = 'translateX(15px)';
-                setTimeout(() => noBtn.style.transform = 'translateX(0)', 150);
-            });
-        }
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    moveNoButton();
+});
 
-        // YES button celebration
-        yesBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            proposalContainer.style.display = 'none';
-            
-            const foreverText = document.createElement('div');
-            foreverText.className = 'forever-text';
-            foreverText.innerText = '💞 FOREVER YOURS 💞';
-            document.body.appendChild(foreverText);
-            
-            // Launch butterflies
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const butterfly = document.createElement('div');
-                    butterfly.className = 'celebration-butterfly';
-                    butterfly.innerHTML = '🦋';
-                    
-                    butterfly.style.left = Math.random() * window.innerWidth + 'px';
-                    butterfly.style.top = Math.random() * window.innerHeight + 'px';
-                    
-                    const dx = (Math.random() * 300 - 150) + 'px';
-                    const dy = (Math.random() * -300 - 100) + 'px';
-                    butterfly.style.setProperty('--dx', dx);
-                    butterfly.style.setProperty('--dy', dy);
-                    
-                    document.body.appendChild(butterfly);
-                    setTimeout(() => butterfly.remove(), 2500);
-                }, i * 50);
-            }
-            
-            // Show final question
-            setTimeout(() => {
-                foreverText.remove();
-                showFinalQuestion();
-            }, 2500);
-        });
 
-        yesBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            yesBtn.click();
-        });
+// 💚 YES → WHATSAPP
+document.getElementById("yesBtn").addEventListener("click", function () {
+    const phoneNumber = "26373796498";
+    const message = encodeURIComponent("💖 YES! i will be yours forever 💖");
 
-        // Initialize display
-        updateTimeElapsed();
-    </script>
+    window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
+});
+
+</script>
+
 </body>
 </html>

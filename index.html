@@ -59,7 +59,7 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 1200px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
@@ -70,51 +70,33 @@
             width: 100%;
         }
 
-        @media (min-width: 900px) {
-            #content {
-                flex-direction: row;
-                align-items: stretch;
-            }
-        }
-
-        /* Left column - Love Letter */
+        /* Love Letter */
         #code {
-            flex: 1;
+            width: 100%;
             background: rgba(255, 245, 250, 0.95);
             backdrop-filter: blur(4px);
             border-radius: 24px;
-            padding: 25px;
+            padding: 20px;
             border: 2px solid #ffd5e2;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
-            overflow-y: auto;
-            max-height: 600px;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            width: 100%;
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255,150,200,0.2);
         }
 
-        @media (max-width: 900px) {
-            #code {
-                max-height: 400px;
-                font-size: 14px;
-                padding: 20px;
-            }
-        }
-
-        /* Right column - Heart (initially hidden) */
+        /* Heart */
         #loveHeart {
-            flex: 1;
-            position: relative;
-            min-width: 280px;
-            aspect-ratio: 1/1.2;
-            max-width: 500px;
-            margin: 0 auto;
             width: 100%;
+            position: relative;
+            aspect-ratio: 1/1.2;
+            margin: 0 auto;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.8s ease, visibility 0.8s;
+            background: #ffd5e2;
+            border-radius: 24px;
+            overflow: hidden;
         }
 
         #loveHeart.visible {
@@ -122,95 +104,127 @@
             visibility: visible;
         }
 
+        /* Fallback heart animation */
+        .heart-fallback {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ffb6c1, #ffc0cb);
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .heart-fallback::before,
+        .heart-fallback::after {
+            content: '❤️';
+            position: absolute;
+            font-size: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
         canvas {
             width: 100% !important;
             height: 100% !important;
-            border-radius: 24px;
             display: block;
         }
 
         #words {
             position: absolute;
-            bottom: 15px;
+            bottom: 10px;
             left: 0;
             right: 0;
             text-align: center;
             z-index: 25;
-            padding: 0 10px;
+            padding: 0 8px;
             pointer-events: none;
         }
 
         #messages {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(2px);
-            border-radius: 40px;
-            padding: 8px 16px;
+            border-radius: 30px;
+            padding: 6px 12px;
             display: inline-block;
-            margin-bottom: 8px;
-            font-size: 15px;
+            margin-bottom: 6px;
+            font-size: 13px;
             color: #b34b6b;
-            max-width: 90%;
+            max-width: 95%;
         }
 
         #elapseClock {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         #loveu {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(4px);
-            border-radius: 30px;
-            padding: 15px 20px;
+            border-radius: 25px;
+            padding: 12px 15px;
             border: 2px solid #ffbfd4;
             display: inline-block;
-            max-width: 95%;
+            max-width: 98%;
             pointer-events: auto;
+            width: auto;
+            min-width: 200px;
         }
 
         .name-line {
-            font-size: 22px;
+            font-size: 18px;
             color: #ac4e74;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             white-space: normal;
             word-wrap: break-word;
         }
 
         .proposal-container {
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
         .proposal-question {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: #c42765;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1.3;
             word-wrap: break-word;
         }
 
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            min-height: 60px;
+            min-height: 50px;
         }
 
         .yes-btn, .no-btn {
-            padding: 10px 30px;
-            font-size: 20px;
+            padding: 10px 25px;
+            font-size: 18px;
             font-weight: bold;
             border: none;
-            border-radius: 50px;
+            border-radius: 40px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255,120,160,0.3);
-            min-width: 100px;
+            box-shadow: 0 4px 10px rgba(255,120,160,0.3);
+            min-width: 90px;
             -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
+            touch-action: manipulation;
         }
 
         .yes-btn {
@@ -231,21 +245,21 @@
         }
 
         .signature {
-            font-size: 18px;
+            font-size: 16px;
             color: #b34e71;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         #heartspan {
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 12px;
             cursor: pointer;
         }
 
         #heartspan i {
             color: #ff4d7a;
-            font-size: 42px;
-            filter: drop-shadow(0 0 6px #ffa5c0);
+            font-size: 36px;
+            filter: drop-shadow(0 0 5px #ffa5c0);
             transition: transform 0.2s ease;
         }
 
@@ -257,22 +271,22 @@
         .scroll-hint {
             text-align: center;
             color: #b34b6b;
-            font-size: 14px;
-            margin-top: 15px;
+            font-size: 13px;
+            margin-top: 12px;
             animation: bounce 1.5s infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(5px); }
+            50% { transform: translateY(3px); }
         }
 
         /* Celebration styles */
         .celebration-butterfly {
             position: fixed;
             color: #ffb3d1;
-            font-size: 30px;
-            filter: drop-shadow(0 0 8px #ff69b4);
+            font-size: 24px;
+            filter: drop-shadow(0 0 5px #ff69b4);
             animation: celebrateFloat 3s ease-out forwards;
             z-index: 10000;
             pointer-events: none;
@@ -280,7 +294,7 @@
 
         @keyframes celebrateFloat {
             0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) scale(1.5); opacity: 0; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1.2); opacity: 0; }
         }
 
         .forever-text {
@@ -288,150 +302,120 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 48px;
+            font-size: 32px;
             font-weight: bold;
             color: #ff3388;
-            text-shadow: 0 0 30px #ffb3d9;
+            text-shadow: 0 0 20px #ffb3d9;
             z-index: 10001;
             animation: glowPulse 2s infinite;
             background: rgba(255,240,245,0.9);
-            padding: 20px 40px;
-            border-radius: 100px;
-            border: 4px solid white;
+            padding: 15px 25px;
+            border-radius: 60px;
+            border: 3px solid white;
             backdrop-filter: blur(5px);
             text-align: center;
-            white-space: nowrap;
+            white-space: normal;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
         }
 
         /* Final question styles */
         .final-question-container {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 30px;
+            position: fixed;
+            bottom: 20px;
+            left: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 18px 15px;
             border: 3px solid #ff99bb;
             text-align: center;
-            animation: slideUp 0.8s ease;
+            animation: slideUp 0.5s ease;
+            z-index: 10002;
+            box-shadow: 0 10px 30px rgba(255,80,130,0.3);
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
+            from { transform: translateY(100px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
         .final-question {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: bold;
             color: #c42765;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.3;
+            word-wrap: break-word;
         }
 
         .final-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .final-yes, .final-no {
-            padding: 15px 40px;
-            font-size: 22px;
+            padding: 12px 30px;
+            font-size: 20px;
             font-weight: bold;
             border: none;
-            border-radius: 60px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 140px;
+            transition: all 0.2s ease;
+            min-width: 110px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .final-yes {
             background: #ff99bb;
             color: white;
-            border: 3px solid #ff4d7a;
+            border: 2px solid #ff4d7a;
         }
 
-        .final-yes:hover {
-            transform: scale(1.1);
+        .final-yes:active {
+            transform: scale(0.95);
             background: #ff80aa;
         }
 
         .final-no {
             background: #ffe4f0;
             color: #b34e71;
-            border: 3px solid #ffb3c6;
+            border: 2px solid #ffb3c6;
         }
 
-        .final-no:hover {
+        .final-no:active {
             background: #ffd5e2;
-            transform: scale(1.05);
+            transform: scale(0.95);
         }
 
         .whatsapp-message {
             position: fixed;
-            bottom: 20px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
             background: #25D366;
             color: white;
-            padding: 15px 30px;
-            border-radius: 60px;
-            font-size: 18px;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
             font-weight: bold;
-            z-index: 10002;
-            animation: slideUp 0.5s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        @media (max-width: 600px) {
-            .forever-text {
-                font-size: 32px;
-                padding: 15px 25px;
-                white-space: normal;
-                width: 90%;
-            }
-            
-            .proposal-question {
-                font-size: 20px;
-            }
-            
-            .yes-btn, .no-btn {
-                padding: 8px 20px;
-                font-size: 18px;
-                min-width: 80px;
-            }
-            
-            .name-line {
-                font-size: 20px;
-            }
-            
-            .final-question {
-                font-size: 22px;
-            }
-            
-            .final-yes, .final-no {
-                padding: 12px 25px;
-                font-size: 18px;
-                min-width: 100px;
-            }
-        }
-
-        @keyframes glowPulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.05); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-
-        .comments {
-            color: #ac7088;
-        }
-
-        .space {
-            margin-left: 20px;
-        }
-
-        a {
-            text-decoration: none;
+            z-index: 10003;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            max-width: 90%;
+            text-align: center;
         }
 
         /* Continue button */
@@ -439,53 +423,83 @@
             background: #ff99bb;
             color: white;
             border: none;
-            border-radius: 50px;
-            padding: 12px 30px;
-            font-size: 18px;
+            border-radius: 40px;
+            padding: 12px 25px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255,120,160,0.4);
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(255,120,160,0.4);
             transition: all 0.2s ease;
             display: inline-block;
-        }
-
-        #continueBtn:hover {
-            transform: scale(1.05);
-            background: #ff80aa;
+            width: 100%;
+            max-width: 250px;
+            touch-action: manipulation;
         }
 
         #continueBtn:active {
             transform: scale(0.95);
+            background: #ff80aa;
         }
-    </style>
 
-    <!-- These external files are needed for the heart animation -->
-    <link href="css/default.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/garden.js"></script>
-    <script type="text/javascript" src="js/functions.js"></script>
-    
-    <style>
-        /* Quick fix for missing files - provide fallback styles */
-        .errorMsg {
-            display: none;
+        .comments {
+            color: #ac7088;
+        }
+
+        .space {
+            margin-left: 15px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Extra small screens */
+        @media (max-width: 380px) {
+            #code {
+                padding: 15px;
+                font-size: 13px;
+            }
+            
+            .proposal-question {
+                font-size: 18px;
+            }
+            
+            .yes-btn, .no-btn {
+                padding: 8px 20px;
+                font-size: 16px;
+                min-width: 80px;
+            }
+            
+            .name-line {
+                font-size: 16px;
+            }
+            
+            .final-question {
+                font-size: 20px;
+            }
+            
+            .final-yes, .final-no {
+                padding: 10px 20px;
+                font-size: 18px;
+                min-width: 90px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="butterfly-minimal">
-        <div class="mini-butterfly" style="top: 15%; left: 8%;">🦋</div>
-        <div class="mini-butterfly" style="top: 75%; left: 92%; animation-delay: 2s;">🦋</div>
-        <div class="mini-butterfly" style="top: 40%; left: 58%; animation-delay: 5s;">🦋</div>
-        <div class="mini-butterfly" style="top: 82%; left: 18%; animation-delay: 1s;">🦋</div>
-        <div class="mini-butterfly" style="top: 28%; left: 72%; animation-delay: 3.5s;">🦋</div>
+        <div class="mini-butterfly" style="top: 10%; left: 5%;">🦋</div>
+        <div class="mini-butterfly" style="top: 70%; left: 90%; animation-delay: 2s;">🦋</div>
+        <div class="mini-butterfly" style="top: 30%; left: 50%; animation-delay: 4s;">🦋</div>
+        <div class="mini-butterfly" style="top: 80%; left: 15%; animation-delay: 1s;">🦋</div>
+        <div class="mini-butterfly" style="top: 20%; left: 80%; animation-delay: 3s;">🦋</div>
     </div>
 
     <div id="mainDiv">
         <div id="content">
-            <!-- Love Letter (always visible first) -->
+            <!-- Love Letter -->
             <div id="code">
                 <span class="comments">/**</span><br />
                 <span class="space"></span><span class="comments">*  the day i met you — 18 june  🦋</span><br />
@@ -509,22 +523,22 @@
                 <span style="color:#b13e68;">"baby, i will love you forever — Vimbai."</span><br />
                 <br />
                 
-                <!-- Scroll hint appears only on mobile -->
-                <div class="scroll-hint" id="scrollHint">👇 scroll to continue 👇</div>
+                <!-- Scroll hint -->
+                <div class="scroll-hint" id="scrollHint">👇 scroll down 👇</div>
                 
-                <!-- Continue button - click this to reveal heart -->
+                <!-- Continue button -->
                 <div style="text-align: center;">
                     <button id="continueBtn">💖 continue to heart 💖</button>
                 </div>
             </div>
 
-            <!-- Heart + Proposal (hidden initially) -->
+            <!-- Heart + Proposal -->
             <div id="loveHeart">
-                <canvas id="garden"></canvas>
+                <div id="fallbackHeart" class="heart-fallback"></div>
                 <div id="words">
                     <div id="messages">
                         <span>18 june · 9 months of you</span>
-                        <div id="elapseClock"></div>
+                        <div id="elapseClock">0 days 0 hours 0 minutes 0 seconds</div>
                     </div>
                     <div id="loveu">
                         <div class="name-line">eng lui, baba vematwins</div>
@@ -544,75 +558,51 @@
         </div>
     </div>
 
-    <!-- Container for final question (initially empty) -->
-    <div id="finalQuestionContainer" style="position: fixed; bottom: 30px; left: 0; right: 0; z-index: 10002; pointer-events: none; display: flex; justify-content: center;">
-        <!-- Final question will be inserted here -->
-    </div>
+    <!-- Container for final question -->
+    <div id="finalQuestionContainer" style="display: none;"></div>
 
     <script type="text/javascript">
         // Get elements
         const loveHeart = document.getElementById('loveHeart');
         const continueBtn = document.getElementById('continueBtn');
         const scrollHint = document.getElementById('scrollHint');
-        const codeDiv = document.getElementById('code');
         const finalContainer = document.getElementById('finalQuestionContainer');
+        const elapseClock = document.getElementById('elapseClock');
         
         // Date: 18th June last year
-        var together = new Date();
-        var currentYear = new Date().getFullYear();
-        together = new Date(currentYear - 1, 5, 18);
+        const startDate = new Date();
+        const currentYear = new Date().getFullYear();
+        const together = new Date(currentYear - 1, 5, 18); // June 18th last year
         together.setHours(0, 0, 0, 0);
 
-        // Hide scroll hint on desktop
-        if (window.innerWidth > 900) {
-            scrollHint.style.display = 'none';
+        // Update time elapsed
+        function updateTimeElapsed() {
+            const now = new Date();
+            const diff = now - together;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            elapseClock.innerHTML = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
         }
 
-        // Continue button click - reveal heart and start animation
+        // Continue button click
         continueBtn.addEventListener('click', function() {
-            // Reveal the heart
             loveHeart.classList.add('visible');
             
-            // Smooth scroll to heart
+            // Smooth scroll
             loveHeart.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Start the heart animation
-            setTimeout(function() {
-                if (typeof startHeartAnimation === 'function') {
-                    startHeartAnimation();
-                }
-            }, 500);
-
-            // Start time counter
-            if (typeof timeElapse === 'function') {
-                timeElapse(together);
-                setInterval(function () {
-                    timeElapse(together);
-                }, 500);
-            }
-
-            if (typeof adjustCodePosition === 'function') {
-                adjustCodePosition();
-            }
+            // Start time updates
+            updateTimeElapsed();
+            setInterval(updateTimeElapsed, 1000);
             
-            if (typeof jQuery !== 'undefined' && jQuery.fn.typewriter) {
-                $("#code").typewriter();
-            }
-            
-            // Hide the continue button and scroll hint
+            // Hide button and hint
             continueBtn.style.display = 'none';
             scrollHint.style.display = 'none';
         });
-
-        // Fallback animation in case external files fail
-        function fallbackAnimation() {
-            const canvas = document.getElementById('garden');
-            if (canvas && !window.startHeartAnimation) {
-                canvas.style.background = 'linear-gradient(45deg, #ffb6c1, #ffc0cb)';
-            }
-        }
-        
-        setTimeout(fallbackAnimation, 1000);
 
         // Heart click reaction
         document.getElementById('heartspan').addEventListener('click', function(e) {
@@ -622,18 +612,18 @@
             b.style.position = 'fixed';
             b.style.left = (e.clientX - 10) + 'px';
             b.style.top = (e.clientY - 20) + 'px';
-            b.style.fontSize = '28px';
+            b.style.fontSize = '24px';
             b.style.color = '#f9a8c8';
             b.style.pointerEvents = 'none';
             b.style.zIndex = 9999;
-            b.style.transition = 'all 1.8s ease-out';
+            b.style.transition = 'all 1.5s ease-out';
             b.style.opacity = 0.8;
             document.body.appendChild(b);
             setTimeout(() => {
-                b.style.transform = `translate(${30}px, ${-80}px) rotate(10deg)`;
+                b.style.transform = `translate(${20}px, ${-60}px) rotate(10deg)`;
                 b.style.opacity = 0;
             }, 20);
-            setTimeout(() => b.remove(), 2000);
+            setTimeout(() => b.remove(), 1500);
         });
 
         // Proposal magic
@@ -642,15 +632,15 @@
         const proposalContainer = document.getElementById('proposalContainer');
 
         function moveNoButton() {
-            const x = (Math.random() * 100 - 50);
-            const y = (Math.random() * 60 - 30);
+            const x = (Math.random() * 60 - 30);
+            const y = (Math.random() * 40 - 20);
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
         }
 
         function showPlayfulMessage() {
             const messages = [
-                "😜 nice try!", "🦋 you can't say no!", "💖 no is not an option",
-                "✨ try again!", "🥺 pretty please?", "💘 nope!"
+                "😜 nice try!", "🦋 can't say no!", "💖 not allowed!",
+                "✨ try again!", "🥺 please?", "💘 nope!"
             ];
             const randomMsg = messages[Math.floor(Math.random() * messages.length)];
             
@@ -658,23 +648,24 @@
             floatMsg.innerHTML = randomMsg;
             floatMsg.style.position = 'fixed';
             floatMsg.style.left = '50%';
-            floatMsg.style.top = '30%';
+            floatMsg.style.top = '40%';
             floatMsg.style.transform = 'translateX(-50%)';
             floatMsg.style.backgroundColor = '#ffdfed';
-            floatMsg.style.padding = '10px 20px';
-            floatMsg.style.borderRadius = '40px';
+            floatMsg.style.padding = '8px 16px';
+            floatMsg.style.borderRadius = '30px';
             floatMsg.style.border = '2px solid #ff99bb';
             floatMsg.style.color = '#b32d5e';
             floatMsg.style.fontWeight = 'bold';
+            floatMsg.style.fontSize = '14px';
             floatMsg.style.zIndex = '10001';
-            floatMsg.style.transition = 'all 1.5s ease-out';
+            floatMsg.style.transition = 'all 1s ease-out';
             document.body.appendChild(floatMsg);
             
             setTimeout(() => {
-                floatMsg.style.transform = 'translateX(-50%) translateY(-50px)';
+                floatMsg.style.transform = 'translateX(-50%) translateY(-30px)';
                 floatMsg.style.opacity = '0';
-            }, 100);
-            setTimeout(() => floatMsg.remove(), 2000);
+            }, 50);
+            setTimeout(() => floatMsg.remove(), 1000);
         }
 
         noBtn.addEventListener('mouseover', moveNoButton);
@@ -692,58 +683,47 @@
 
         // Function to show final question
         function showFinalQuestion() {
-            // Create final question element
-            const finalDiv = document.createElement('div');
-            finalDiv.className = 'final-question-container';
-            finalDiv.style.pointerEvents = 'auto';
-            finalDiv.innerHTML = `
-                <div class="final-question">💕 will i forever be yours? 💕</div>
-                <div class="final-buttons">
-                    <button class="final-yes" id="finalYesBtn">YES</button>
-                    <button class="final-no" id="finalNoBtn">NO</button>
+            finalContainer.style.display = 'block';
+            finalContainer.innerHTML = `
+                <div class="final-question-container">
+                    <div class="final-question">💕 will i forever be yours? 💕</div>
+                    <div class="final-buttons">
+                        <button class="final-yes" id="finalYesBtn">YES</button>
+                        <button class="final-no" id="finalNoBtn">NO</button>
+                    </div>
                 </div>
             `;
             
-            // Clear container and append
-            finalContainer.innerHTML = '';
-            finalContainer.appendChild(finalDiv);
-            
-            // Add event listeners for final buttons
             document.getElementById('finalYesBtn').addEventListener('click', function() {
-                // Send WhatsApp message
-                const phoneNumber = '073796498'; // Your WhatsApp number
+                const phoneNumber = '073796498';
                 const message = encodeURIComponent("💖 YES! i will be yours forever, eng lui! 💖");
                 window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
                 
-                // Show success message
                 const successMsg = document.createElement('div');
                 successMsg.className = 'whatsapp-message';
-                successMsg.innerHTML = '💌 Message sent to eng lui! 💌';
+                successMsg.innerHTML = '💌 Message sent! 💌';
                 document.body.appendChild(successMsg);
-                setTimeout(() => successMsg.remove(), 3000);
+                setTimeout(() => successMsg.remove(), 2000);
                 
-                // Disable buttons after click
                 document.getElementById('finalYesBtn').disabled = true;
                 document.getElementById('finalNoBtn').disabled = true;
             });
             
             document.getElementById('finalNoBtn').addEventListener('click', function() {
-                // Playful response for No
                 const playfulNo = document.createElement('div');
                 playfulNo.className = 'whatsapp-message';
                 playfulNo.style.background = '#ff99bb';
-                playfulNo.innerHTML = '😜 try clicking YES instead! 😜';
+                playfulNo.innerHTML = '😜 click YES instead! 😜';
                 document.body.appendChild(playfulNo);
-                setTimeout(() => playfulNo.remove(), 2000);
+                setTimeout(() => playfulNo.remove(), 1500);
                 
-                // Make No button move a little
                 const noBtn = document.getElementById('finalNoBtn');
-                noBtn.style.transform = 'translateX(20px)';
-                setTimeout(() => noBtn.style.transform = 'translateX(0)', 200);
+                noBtn.style.transform = 'translateX(15px)';
+                setTimeout(() => noBtn.style.transform = 'translateX(0)', 150);
             });
         }
 
-        // YES button celebration (modified)
+        // YES button celebration
         yesBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -755,7 +735,7 @@
             document.body.appendChild(foreverText);
             
             // Launch butterflies
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
                     const butterfly = document.createElement('div');
                     butterfly.className = 'celebration-butterfly';
@@ -764,21 +744,21 @@
                     butterfly.style.left = Math.random() * window.innerWidth + 'px';
                     butterfly.style.top = Math.random() * window.innerHeight + 'px';
                     
-                    const dx = (Math.random() * 400 - 200) + 'px';
-                    const dy = (Math.random() * -400 - 200) + 'px';
+                    const dx = (Math.random() * 300 - 150) + 'px';
+                    const dy = (Math.random() * -300 - 100) + 'px';
                     butterfly.style.setProperty('--dx', dx);
                     butterfly.style.setProperty('--dy', dy);
                     
                     document.body.appendChild(butterfly);
-                    setTimeout(() => butterfly.remove(), 2900);
-                }, i * 60);
+                    setTimeout(() => butterfly.remove(), 2500);
+                }, i * 50);
             }
             
-            // Show final question after 3 seconds
+            // Show final question
             setTimeout(() => {
                 foreverText.remove();
                 showFinalQuestion();
-            }, 3000);
+            }, 2500);
         });
 
         yesBtn.addEventListener('touchstart', function(e) {
@@ -786,26 +766,8 @@
             yesBtn.click();
         });
 
-        // Handle resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 900) {
-                scrollHint.style.display = 'none';
-            } else if (loveHeart.classList.contains('visible')) {
-                scrollHint.style.display = 'none';
-            } else {
-                scrollHint.style.display = 'block';
-            }
-        });
-
-        // Make sure continue button is clickable (debug)
-        console.log('Continue button:', continueBtn);
-        continueBtn.onclick = function() {
-            console.log('Button clicked!');
-            loveHeart.classList.add('visible');
-            continueBtn.style.display = 'none';
-            scrollHint.style.display = 'none';
-            loveHeart.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        };
+        // Initialize display
+        updateTimeElapsed();
     </script>
 </body>
 </html>

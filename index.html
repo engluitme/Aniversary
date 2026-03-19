@@ -303,6 +303,86 @@
             white-space: nowrap;
         }
 
+        /* Final question styles */
+        .final-question-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            border: 3px solid #ff99bb;
+            text-align: center;
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .final-question {
+            font-size: 28px;
+            font-weight: bold;
+            color: #c42765;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .final-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .final-yes, .final-no {
+            padding: 15px 40px;
+            font-size: 22px;
+            font-weight: bold;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 140px;
+        }
+
+        .final-yes {
+            background: #ff99bb;
+            color: white;
+            border: 3px solid #ff4d7a;
+        }
+
+        .final-yes:hover {
+            transform: scale(1.1);
+            background: #ff80aa;
+        }
+
+        .final-no {
+            background: #ffe4f0;
+            color: #b34e71;
+            border: 3px solid #ffb3c6;
+        }
+
+        .final-no:hover {
+            background: #ffd5e2;
+            transform: scale(1.05);
+        }
+
+        .whatsapp-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10002;
+            animation: slideUp 0.5s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
         @media (max-width: 600px) {
             .forever-text {
                 font-size: 32px;
@@ -323,6 +403,16 @@
             
             .name-line {
                 font-size: 20px;
+            }
+            
+            .final-question {
+                font-size: 22px;
+            }
+            
+            .final-yes, .final-no {
+                padding: 12px 25px;
+                font-size: 18px;
+                min-width: 100px;
             }
         }
 
@@ -364,12 +454,24 @@
             transform: scale(1.05);
             background: #ff80aa;
         }
+
+        #continueBtn:active {
+            transform: scale(0.95);
+        }
     </style>
 
+    <!-- These external files are needed for the heart animation -->
     <link href="css/default.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/garden.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
+    
+    <style>
+        /* Quick fix for missing files - provide fallback styles */
+        .errorMsg {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -442,12 +544,18 @@
         </div>
     </div>
 
+    <!-- Container for final question (initially empty) -->
+    <div id="finalQuestionContainer" style="position: fixed; bottom: 30px; left: 0; right: 0; z-index: 10002; pointer-events: none; display: flex; justify-content: center;">
+        <!-- Final question will be inserted here -->
+    </div>
+
     <script type="text/javascript">
         // Get elements
         const loveHeart = document.getElementById('loveHeart');
         const continueBtn = document.getElementById('continueBtn');
         const scrollHint = document.getElementById('scrollHint');
         const codeDiv = document.getElementById('code');
+        const finalContainer = document.getElementById('finalQuestionContainer');
         
         // Date: 18th June last year
         var together = new Date();
@@ -468,18 +576,26 @@
             // Smooth scroll to heart
             loveHeart.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Start the heart animation if not already started
-            if (document.createElement('canvas').getContext) {
-                setTimeout(function () {
+            // Start the heart animation
+            setTimeout(function() {
+                if (typeof startHeartAnimation === 'function') {
                     startHeartAnimation();
-                }, 500);
+                }
+            }, 500);
 
+            // Start time counter
+            if (typeof timeElapse === 'function') {
                 timeElapse(together);
                 setInterval(function () {
                     timeElapse(together);
                 }, 500);
+            }
 
+            if (typeof adjustCodePosition === 'function') {
                 adjustCodePosition();
+            }
+            
+            if (typeof jQuery !== 'undefined' && jQuery.fn.typewriter) {
                 $("#code").typewriter();
             }
             
@@ -488,15 +604,15 @@
             scrollHint.style.display = 'none';
         });
 
-        // Initialize canvas check
-        if (!document.createElement('canvas').getContext) {
-            var msg = document.createElement("div");
-            msg.id = "errorMsg";
-            msg.innerHTML = "your browser doesn't support HTML5!<br/>recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
-            document.body.appendChild(msg);
-            $("#code").css("display", "none")
-            document.execCommand("stop");
+        // Fallback animation in case external files fail
+        function fallbackAnimation() {
+            const canvas = document.getElementById('garden');
+            if (canvas && !window.startHeartAnimation) {
+                canvas.style.background = 'linear-gradient(45deg, #ffb6c1, #ffc0cb)';
+            }
         }
+        
+        setTimeout(fallbackAnimation, 1000);
 
         // Heart click reaction
         document.getElementById('heartspan').addEventListener('click', function(e) {
@@ -574,7 +690,60 @@
             showPlayfulMessage();
         });
 
-        // YES button celebration
+        // Function to show final question
+        function showFinalQuestion() {
+            // Create final question element
+            const finalDiv = document.createElement('div');
+            finalDiv.className = 'final-question-container';
+            finalDiv.style.pointerEvents = 'auto';
+            finalDiv.innerHTML = `
+                <div class="final-question">💕 will i forever be yours? 💕</div>
+                <div class="final-buttons">
+                    <button class="final-yes" id="finalYesBtn">YES</button>
+                    <button class="final-no" id="finalNoBtn">NO</button>
+                </div>
+            `;
+            
+            // Clear container and append
+            finalContainer.innerHTML = '';
+            finalContainer.appendChild(finalDiv);
+            
+            // Add event listeners for final buttons
+            document.getElementById('finalYesBtn').addEventListener('click', function() {
+                // Send WhatsApp message
+                const phoneNumber = '073796498'; // Your WhatsApp number
+                const message = encodeURIComponent("💖 YES! i will be yours forever, eng lui! 💖");
+                window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+                
+                // Show success message
+                const successMsg = document.createElement('div');
+                successMsg.className = 'whatsapp-message';
+                successMsg.innerHTML = '💌 Message sent to eng lui! 💌';
+                document.body.appendChild(successMsg);
+                setTimeout(() => successMsg.remove(), 3000);
+                
+                // Disable buttons after click
+                document.getElementById('finalYesBtn').disabled = true;
+                document.getElementById('finalNoBtn').disabled = true;
+            });
+            
+            document.getElementById('finalNoBtn').addEventListener('click', function() {
+                // Playful response for No
+                const playfulNo = document.createElement('div');
+                playfulNo.className = 'whatsapp-message';
+                playfulNo.style.background = '#ff99bb';
+                playfulNo.innerHTML = '😜 try clicking YES instead! 😜';
+                document.body.appendChild(playfulNo);
+                setTimeout(() => playfulNo.remove(), 2000);
+                
+                // Make No button move a little
+                const noBtn = document.getElementById('finalNoBtn');
+                noBtn.style.transform = 'translateX(20px)';
+                setTimeout(() => noBtn.style.transform = 'translateX(0)', 200);
+            });
+        }
+
+        // YES button celebration (modified)
         yesBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -604,6 +773,12 @@
                     setTimeout(() => butterfly.remove(), 2900);
                 }, i * 60);
             }
+            
+            // Show final question after 3 seconds
+            setTimeout(() => {
+                foreverText.remove();
+                showFinalQuestion();
+            }, 3000);
         });
 
         yesBtn.addEventListener('touchstart', function(e) {
@@ -621,6 +796,16 @@
                 scrollHint.style.display = 'block';
             }
         });
+
+        // Make sure continue button is clickable (debug)
+        console.log('Continue button:', continueBtn);
+        continueBtn.onclick = function() {
+            console.log('Button clicked!');
+            loveHeart.classList.add('visible');
+            continueBtn.style.display = 'none';
+            scrollHint.style.display = 'none';
+            loveHeart.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
     </script>
 </body>
 </html>
